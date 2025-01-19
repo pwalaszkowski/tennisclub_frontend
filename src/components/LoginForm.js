@@ -77,6 +77,7 @@ const LoginForm = () => {
                         py: 1.5,
                         fontSize: '1rem',
                         borderRadius: 20,
+                        color: 'white',
                         backgroundColor: '#4CAF50',
                         '&:hover': {
                             backgroundColor: '#388E3C',

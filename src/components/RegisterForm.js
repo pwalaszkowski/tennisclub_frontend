@@ -14,35 +14,53 @@ const RegisterForm = () => {
         password: '',
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
     const membershipOptions = ['standard', 'premium', 'vip'];
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
+        setSuccessMessage('');
+
+        // Basic validation
+        if (!formData.username || !formData.password || !formData.email) {
+            setErrorMessage('Please fill in all required fields.');
+            return;
+        }
+
         try {
-            await axios.post('http://127.0.0.1:8000/api/register/', formData);
-            alert('User registered successfully!');
-        } catch (error) {
-            if (error.response) {
-                // Server responded with a status other than 2xx
-                alert('Error: ' + error.response.data);
-            } else if (error.request) {
-                // Request was made but no response received
-                alert('No response from server. Please try again later.');
-            } else {
-                // Something happened while setting up the request
-                alert('An unexpected error occurred: ' + error.message);
+            const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
+            if (response.status === 201) {
+                setSuccessMessage('Registration successful!');
+                setFormData({
+                    username: '',
+                    name: '',
+                    last_name: '',
+                    email: '',
+                    phone: '',
+                    membership_type: '',
+                    address: '',
+                    password: '',
+                });
             }
+        } catch (error) {
+            setErrorMessage(
+                error.response?.data?.detail || 'An error occurred during registration.'
+            );
         }
     };
 
     return (
         <Box
             sx={{
-                maxWidth: 500,
+                maxWidth: 400,
                 margin: 'auto',
                 mt: 6,
                 p: 4,
@@ -54,10 +72,10 @@ const RegisterForm = () => {
             }}
         >
             <Typography variant="h4" gutterBottom sx={{ color: '#4CAF50', fontWeight: 700 }}>
-                Create Your Account
+                Join Us Today!
             </Typography>
             <Typography variant="body1" gutterBottom sx={{ color: '#777' }}>
-                Join the Tennis Club and enjoy exclusive benefits!
+                Create your Tennis Club account to get started.
             </Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
@@ -68,11 +86,12 @@ const RegisterForm = () => {
                     value={formData.username}
                     onChange={handleChange}
                     variant="outlined"
+                    required
                 />
                 <TextField
                     fullWidth
                     margin="normal"
-                    label="First Name"
+                    label="Name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -92,9 +111,11 @@ const RegisterForm = () => {
                     margin="normal"
                     label="Email"
                     name="email"
+                    type="email"
                     value={formData.email}
                     onChange={handleChange}
                     variant="outlined"
+                    required
                 />
                 <TextField
                     fullWidth
@@ -106,9 +127,9 @@ const RegisterForm = () => {
                     variant="outlined"
                 />
                 <TextField
-                    select
                     fullWidth
                     margin="normal"
+                    select
                     label="Membership Type"
                     name="membership_type"
                     value={formData.membership_type}
@@ -117,7 +138,7 @@ const RegisterForm = () => {
                 >
                     {membershipOptions.map((option) => (
                         <MenuItem key={option} value={option}>
-                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                            {option}
                         </MenuItem>
                     ))}
                 </TextField>
@@ -134,12 +155,24 @@ const RegisterForm = () => {
                     fullWidth
                     margin="normal"
                     label="Password"
-                    type="password"
                     name="password"
+                    type="password"
                     value={formData.password}
                     onChange={handleChange}
                     variant="outlined"
+                    required
                 />
+
+                {errorMessage && (
+                    <Typography color="error" sx={{ mt: 1 }}>
+                        {errorMessage}
+                    </Typography>
+                )}
+                {successMessage && (
+                    <Typography color="success" sx={{ mt: 1 }}>
+                        {successMessage}
+                    </Typography>
+                )}
                 <Button
                     variant="contained"
                     color="primary"
@@ -150,6 +183,7 @@ const RegisterForm = () => {
                         py: 1.5,
                         fontSize: '1rem',
                         borderRadius: 20,
+                        color: 'white',
                         backgroundColor: '#4CAF50',
                         '&:hover': {
                             backgroundColor: '#388E3C',
@@ -159,9 +193,6 @@ const RegisterForm = () => {
                     Register
                 </Button>
             </form>
-            <Typography variant="body2" sx={{ mt: 2, color: '#555' }}>
-                Already have an account? <a href="/login" style={{ color: '#4CAF50', textDecoration: 'none' }}>Log in here</a>.
-            </Typography>
         </Box>
     );
 };
