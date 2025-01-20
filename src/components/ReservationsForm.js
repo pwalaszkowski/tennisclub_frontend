@@ -160,7 +160,8 @@ const ReservationsForm = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleAddReservation}
-                    sx={{ alignSelf: 'center' }}
+                    sx={{ alignSelf: 'center',
+                          color: 'white'}}
                 >
                     Add Reservation
                 </Button>

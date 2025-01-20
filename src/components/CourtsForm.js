@@ -17,7 +17,10 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    IconButton,
+    InputAdornment,
 } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 
 const CourtsForm = () => {
@@ -83,6 +86,11 @@ const CourtsForm = () => {
         setNewCourt({ ...newCourt, lights: e.target.checked });
     };
 
+    // Clear a specific field
+    const handleClearField = (field) => {
+        setNewCourt({ ...newCourt, [field]: '' });
+    };
+
     return (
         <Box
             sx={{
@@ -112,6 +120,15 @@ const CourtsForm = () => {
                     onChange={handleInputChange}
                     variant="outlined"
                     fullWidth
+                    InputProps={{
+                        endAdornment: newCourt.name && (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => handleClearField('name')}>
+                                    <ClearIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <TextField
                     label="Location"
@@ -120,6 +137,15 @@ const CourtsForm = () => {
                     onChange={handleInputChange}
                     variant="outlined"
                     fullWidth
+                    InputProps={{
+                        endAdornment: newCourt.location && (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => handleClearField('location')}>
+                                    <ClearIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <FormControl fullWidth>
                     <InputLabel>Surface Type</InputLabel>
@@ -127,6 +153,8 @@ const CourtsForm = () => {
                         name="surface"
                         value={newCourt.surface}
                         onChange={handleInputChange}
+                        variant="outlined"
+                        displayEmpty
                     >
                         {surfaceOptions.map((option) => (
                             <MenuItem key={option} value={option.toLowerCase()}>
@@ -149,7 +177,7 @@ const CourtsForm = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleAddCourt}
-                    sx={{ alignSelf: 'center' }}
+                    sx={{ alignSelf: 'center', color: 'white' }}
                 >
                     Add Court
                 </Button>
