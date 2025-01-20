@@ -34,13 +34,48 @@ const LoginForm = () => {
         }
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        setIsLoggedIn(false); // Update login state
-        alert('Logged out successfully!');
-        navigate('/'); // Redirect to home or login page
+    const refreshTokens = async () => {
+        try {
+            const refreshToken = localStorage.getItem('refresh_token');
+            const response = await axios.post('http://127.0.0.1:8000/api/token/refresh/', {
+                refresh: refreshToken,
+            });
+            localStorage.setItem('access_token', response.data.access);
+        } catch (err) {
+            console.error('Token refresh failed:', err);
+        }
     };
+
+    const handleLogout = async () => {
+        // try {
+        //     const token = localStorage.getItem('access_token');
+        //     if (!token) {
+        //         alert('You are already logged out.');
+        //         setIsLoggedIn(false);
+        //         return;
+        //     }
+        //
+        //     await axios.post('http://127.0.0.1:8000/api/logout/', null, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     });
+        //
+        //     // Clear local storage and cookies
+        //     localStorage.removeItem('access_token');
+        //     localStorage.removeItem('refresh_token');
+        //     document.cookie = 'access=; Max-Age=0; path=/;';
+        //     document.cookie = 'refresh=; Max-Age=0; path=/;';
+        //     setIsLoggedIn(false);
+        //     alert('Logged out successfully!');
+        //     navigate('/login');
+        // } catch (error) {
+        //     console.error('Logout failed:', error.response?.data || error.message);
+        //     alert(error.response?.data?.error || 'An error occurred during logout.');
+        // }
+        console.log("Pass")
+    };
+
 
     return (
         <Box

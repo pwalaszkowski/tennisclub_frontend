@@ -66,6 +66,18 @@ const Navbar = () => {
                     </Button>
                     <Button
                         component={Link}
+                        to="/users"
+                        sx={{
+                            fontSize: '1rem',
+                            textTransform: 'none',
+                            color: 'white',
+                            '&:hover': { color: '#FFD700' },
+                        }}
+                    >
+                        Members
+                    </Button>
+                    <Button
+                        component={Link}
                         to="/register"
                         sx={{
                             fontSize: '1rem',
