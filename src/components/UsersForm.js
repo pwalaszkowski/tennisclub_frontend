@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 
-const Users = () => {
+const UsersForm = () => {
     const [users, setUsers] = useState([]); // State to store user data
 
     useEffect(() => {
@@ -103,4 +103,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default UsersForm;

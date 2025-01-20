@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Users from './pages/Users';
+import UsersForm from './components/UsersForm';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 
@@ -14,7 +14,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/users" element={<Users />} />
+                <Route path="/users" element={<UsersForm />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
             </Routes>
