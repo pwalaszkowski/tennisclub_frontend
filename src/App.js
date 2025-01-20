@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import UsersForm from './components/UsersForm';
+import CourtsForm from "./components/CourtsForm";
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/users" element={<UsersForm />} />
+                <Route path="/courts" element={<CourtsForm />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
             </Routes>
