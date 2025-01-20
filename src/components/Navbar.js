@@ -85,6 +85,18 @@ const Navbar = () => {
                     </Button>
                     <Button
                         component={Link}
+                        to="/reservations"
+                        sx={{
+                            fontSize: '1rem',
+                            textTransform: 'none',
+                            color: 'white',
+                            '&:hover': { color: '#FFD700' },
+                        }}
+                    >
+                        Reservations
+                    </Button>
+                    <Button
+                        component={Link}
                         to="/register"
                         sx={{
                             fontSize: '1rem',
