@@ -8,11 +8,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check for token in cookies or local storage
-        const token = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('access='))?.split('=')[1];
-
+        const token = localStorage.getItem('access_token');
         if (token) {
             try {
                 jwtDecode(token); // Validate token
@@ -26,9 +22,8 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
-        // Clear cookies (logout logic)
-        document.cookie = 'access=; Max-Age=0; path=/;';
-        document.cookie = 'refresh=; Max-Age=0; path=/;';
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
         setIsLoggedIn(false);
         navigate('/login');
     };
@@ -37,15 +32,15 @@ const Navbar = () => {
         <AppBar position="static" sx={{ backgroundColor: '#4CAF50', py: 2 }}>
             <Toolbar
                 sx={{
-                    flexDirection: 'column',
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    justifyContent: 'center',
                 }}
             >
                 {/* Logo */}
                 <Typography
-                    variant="h4"
-                    sx={{ color: 'white', fontWeight: 'bold', mb: 2 }}
+                    variant="h5"
+                    sx={{ color: 'white', fontWeight: 'bold' }}
                 >
                     🎾 Tennis Club
                 </Typography>
